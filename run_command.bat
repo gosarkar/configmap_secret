@@ -4,5 +4,7 @@ C:/GS/Software/Kubernetes/kubectl apply -f my-config.yaml
 C:/GS/Software/Kubernetes/kubectl apply -f env-config.yaml
 C:/GS/Software/Kubernetes/kubectl apply -f my-secret.yaml
 C:/GS/Software/Kubernetes/kubectl create configmap vol-configmap --from-file=config.properties
-C:/GS/Software/Kubernetes/kubectl replace -f configmap-env-test.yaml --validate=false
-C:/GS/Software/Kubernetes/kubectl replace -f configmap-volume-test.yaml --validate=false
+C:/GS/Software/Kubernetes/kubectl delete -f configmap-env-test.yaml 
+C:/GS/Software/Kubernetes/kubectl delete -f configmap-volume-test.yaml 
+C:/GS/Software/Kubernetes/kubectl create -f configmap-env-test.yaml 
+C:/GS/Software/Kubernetes/kubectl create -f configmap-volume-test.yaml 
