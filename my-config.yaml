@@ -4,5 +4,5 @@ metadata:
   name: my-config
   namespace: default
 data:
-  airport.name: New Delhi Airport
-  city.name: New Delhi
+  airport.name: Delhi Airport
+  city.name: Pune
