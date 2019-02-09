@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1	
+kind: Deployment
+metadata:
+  name: configmap-env-test
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+      - name: busybox-env 
+        image: registry.au-syd.bluemix.net/gosarkar/nginx
+        env:
+          - name: AIRPORT_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: my-config
+                key: airport.name
+          - name: CITY_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: my-config
+                key: city.name
+          - name: USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: username
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: password      
+        envFrom:
+          - configMapRef:
+              name: env-config

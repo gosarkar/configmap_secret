@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: configmap-volume-test
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+      - name: nginx-vol 
+        image: registry.au-syd.bluemix.net/gosarkar/nginx 
+        env:
+          - name: CITY_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: vol-configmap
+                key: city.name
+          - name: STATE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: vol-configmap
+                key: state.name
+        volumeMounts:
+          - name: vol-configmap
+            mountPath: /usr/src/config
+      volumes:
+      - name: vol-configmap
+        configMap:
+          name: vol-configmap
