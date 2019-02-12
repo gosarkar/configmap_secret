@@ -1,3 +1,4 @@
+ibmcloud login -a API_END_POINT -apikey API_KEY -o ORG -s SPACE
 SET KUBECONFIG=CLUSTER_KUBE_CONFIG_PATH
 kubectl apply -f CONFIG_MAP_YAML_FILE1
 kubectl apply -f CONFIG_MAP_YAML_FILE2
