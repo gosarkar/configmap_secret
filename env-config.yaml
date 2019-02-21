@@ -4,4 +4,4 @@ metadata:
   name: env-config
   namespace: default
 data:
-  log_level: Debug
+  log_level: INFO
