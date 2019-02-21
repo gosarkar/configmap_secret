@@ -45,8 +45,9 @@ pipeline{
                 }
             }
         }
-        stage('Initialize'){
+        stage('Deploy'){
             steps{
+                echo 'Deploying...'
                 bat batFile
             }
         }    
