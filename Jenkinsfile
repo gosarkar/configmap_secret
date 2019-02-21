@@ -1,15 +1,11 @@
+def batFile = 'kubernetes_deploy.bat'
 pipeline{
     agent any
     stages{
-        stage('checkout'){
-            steps{
-                echo 'checkout'
-                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/gosarkar/configmap_secret.git']]]
-            }
-        }
-        stage('update configmap secret'){
+        stage('Initialize'){
             steps{
                 script{
+                    println "Initializing..."
                     withCredentials([usernamePassword(credentialsId: 'secret_test', passwordVariable: 'password', usernameVariable: 'user')]) {
                         def encodedUser = user.bytes.encodeBase64().toString()
                         def encodedPassword = password.bytes.encodeBase64().toString()
@@ -23,7 +19,7 @@ pipeline{
                         println 'encoded password = '+encodedPassword
                     }
                     
-                    def batFile = 'kubernetes_deploy.bat'
+                    //def batFile = 'kubernetes_deploy.bat'
                     def templateFileText = readFile 'kubernetes_deploy_template.bat'
                     def props = readProperties file:'kubernetes_deploy.properties'
                     
@@ -45,9 +41,14 @@ pipeline{
                     bat 'del '+batFile
                     writeFile file: batFile, text: templateFileText
 
-                    bat batFile
+                    //bat batFile
                 }
             }
         }
+        stage('Initialize'){
+            steps{
+                bat batFile
+            }
+        }    
     }
 }
