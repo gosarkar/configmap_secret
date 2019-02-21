@@ -10,7 +10,7 @@ pipeline{
                 script{
                     println "Initializing..."
                     withCredentials([usernamePassword(credentialsId: 'secret_test', passwordVariable: 'password', usernameVariable: 'user')]) {
-                        bat groovyHome+'/groovy UpdateSecretFile.groovy my-secret.yaml '+user+' '+password
+                        bat groovyHome+'/bin/groovy UpdateSecretFile.groovy my-secret.yaml '+user+' '+password
                     }
                     
                     //def batFile = 'kubernetes_deploy.bat'
