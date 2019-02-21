@@ -10,8 +10,6 @@ pipeline{
                 script{
                     println "Initializing..."
                     withCredentials([usernamePassword(credentialsId: 'secret_test', passwordVariable: 'password', usernameVariable: 'user')]) {
-                        def encodedUser = user.bytes.encodeBase64().toString()
-                        def encodedPassword = password.bytes.encodeBase64().toString()
                         bat groovyHome+'/groovy UpdateSecretFile.groovy my-secret.yaml '+user+' '+password
                     }
                     
