@@ -1,6 +1,9 @@
 def batFile = 'kubernetes_deploy.bat'
 pipeline{
     agent any
+    environment { 
+        groovyHome = tool name: 'Groovy', type: 'hudson.plugins.groovy.GroovyInstallation'
+    }
     stages{
         stage('Initialize'){
             steps{
@@ -9,14 +12,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: 'secret_test', passwordVariable: 'password', usernameVariable: 'user')]) {
                         def encodedUser = user.bytes.encodeBase64().toString()
                         def encodedPassword = password.bytes.encodeBase64().toString()
-                        def str = readFile 'my-secret.yaml'
-                        str = str.replace('USERNAME', encodedUser)
-                        str = str.replace('PASSWORD', encodedPassword)
-                        println '==>>'+str
-                        bat 'del my-secret.yaml'
-                        writeFile file: 'my-secret.yaml', text: str
-                        println 'encoded user = '+encodedUser
-                        println 'encoded password = '+encodedPassword
+                        bat groovyHome+'/groovy UpdateSecretFile.groovy my-secret.yaml '+user+' '+password
                     }
                     
                     //def batFile = 'kubernetes_deploy.bat'
